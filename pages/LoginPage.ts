@@ -11,7 +11,7 @@ export class LoginPage {
     this.page = page;
     // Now we initialize the locators inside the constructor
     this.emailInput = page.locator('#ap_email');
-    this.continueButton = page.locator('#continue');
+    this.continueButton = page.locator('#continue[type="submit"]');
     this.passwordInput = page.locator('#ap_password');
     this.signInButton = page.locator('#signInSubmit');
   }
