@@ -8,6 +8,7 @@ export class HomePage {
   readonly addToCartButton: Locator;
   readonly rejectCookiesButton: Locator;
   readonly cartButton: Locator;
+  readonly categoryFilter: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,7 @@ export class HomePage {
     this.addToCartButton = page.locator('#add-to-cart-button');
     this.rejectCookiesButton = page.locator('#sp-cc-rejectall-link');
     this.cartButton = page.locator('#nav-cart');
+    this.categoryFilter = page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' });
   }
 
   async rejectCookies() {
@@ -28,6 +30,21 @@ export class HomePage {
   async searchForProduct(productName: string) {
     await this.searchInput.fill(productName);
     await this.searchButton.click();
+  }
+
+  async applyCategoryFilter() {
+    // Sélectionner précisément l'élément qui a le texte exact "Ordinateurs portables"
+    const categoryFilter = this.page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' }).first();
+    
+    await categoryFilter.click();
+    // Attendre que la page se recharge après l'application du filtre
+    await this.page.waitForLoadState('load');
+  }
+
+  // Nouvelle méthode pour vérifier si l'élément a la classe "a-text-bold"
+  async isCategoryFilterBold() {
+    const hasBoldClass = await this.categoryFilter.evaluate((el) => el.classList.contains('a-text-bold'));
+    return hasBoldClass;
   }
 
   async addFirstProductToCart() {
