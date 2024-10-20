@@ -16,20 +16,19 @@ export class LoginPage {
     this.signInButton = page.locator('#signInSubmit');
   }
 
-async login(email: string, password: string) {
-  // Attendre que le champ email soit visible
-  await this.emailInput.waitFor({ state: 'visible', timeout: 10000 }); // Ajoutez un timeout si besoin
-  await this.emailInput.fill(email);
-  
-  // Cliquez sur le bouton continue
-  await this.continueButton.click();
+  async login(email: string, password: string) {
+    // Wait for the email field to be visible
+    await this.emailInput.waitFor({ state: 'visible', timeout: 10000 }); // Add a timeout if needed
+    await this.emailInput.fill(email);
+    
+    // Click the continue button
+    await this.continueButton.click();
 
-  // Attendre que le champ password soit visible avant de remplir
-  await this.passwordInput.waitFor({ state: 'visible', timeout: 10000 });
-  await this.passwordInput.fill(password);
-  
-  // Cliquez sur le bouton de connexion
-  await this.signInButton.click();
-}
-
+    // Wait for the password field to be visible before filling it
+    await this.passwordInput.waitFor({ state: 'visible', timeout: 10000 });
+    await this.passwordInput.fill(password);
+    
+    // Click the sign-in button
+    await this.signInButton.click();
+  }
 }

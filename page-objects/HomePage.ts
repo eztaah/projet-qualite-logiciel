@@ -8,7 +8,6 @@ export class HomePage {
   readonly addToCartButton: Locator;
   readonly rejectCookiesButton: Locator;
   readonly cartButton: Locator;
-  readonly deleteButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,8 +16,7 @@ export class HomePage {
     this.firstProduct = page.locator('.s-search-results .s-result-item').first();
     this.addToCartButton = page.locator('#add-to-cart-button');
     this.rejectCookiesButton = page.locator('#sp-cc-rejectall-link');
-    this.cartButton = page.locator('#nav-cart');  // Button to go to the cart
-    this.deleteButton = page.locator('input[value="Supprimer"]');  // Button to delete product
+    this.cartButton = page.locator('#nav-cart');
   }
 
   async rejectCookies() {
@@ -33,18 +31,13 @@ export class HomePage {
   }
 
   async addFirstProductToCart() {
-    await this.firstProduct.click();  // Click on the first product
-    await this.page.waitForLoadState('load');  // Ensure the page has fully loaded
+    await this.firstProduct.click();
+    await this.page.waitForLoadState('load');
     await this.addToCartButton.waitFor({ state: 'visible', timeout: 10000 });
-    await this.addToCartButton.click();  // Add to cart
+    await this.addToCartButton.click();
   }
 
   async goToCart() {
-    await this.cartButton.click();  // Go to the cart
-  }
-
-  async removeProductFromCart() {
-    await this.deleteButton.waitFor({ state: 'visible', timeout: 10000 });
-    await this.deleteButton.click();  // Click the "Supprimer" button to delete the product
+    await this.cartButton.click();
   }
 }
