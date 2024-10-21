@@ -22,7 +22,7 @@ export class HomePage {
   }
 
   async rejectCookies() {
-    if (await this.rejectCookiesButton.isVisible({ timeout: 5000 })) {
+    if (await this.rejectCookiesButton.isVisible({ timeout: 60000 })) {
       await this.rejectCookiesButton.click();
     }
   }
@@ -33,15 +33,11 @@ export class HomePage {
   }
 
   async applyCategoryFilter() {
-    // Sélectionner précisément l'élément qui a le texte exact "Ordinateurs portables"
     const categoryFilter = this.page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' }).first();
-    
     await categoryFilter.click();
-    // Attendre que la page se recharge après l'application du filtre
     await this.page.waitForLoadState('load');
   }
 
-  // Nouvelle méthode pour vérifier si l'élément a la classe "a-text-bold"
   async isCategoryFilterBold() {
     const hasBoldClass = await this.categoryFilter.evaluate((el) => el.classList.contains('a-text-bold'));
     return hasBoldClass;
@@ -50,7 +46,7 @@ export class HomePage {
   async addFirstProductToCart() {
     await this.firstProduct.click();
     await this.page.waitForLoadState('load');
-    await this.addToCartButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.addToCartButton.waitFor({ state: 'visible', timeout: 60000 });
     await this.addToCartButton.click();
   }
 

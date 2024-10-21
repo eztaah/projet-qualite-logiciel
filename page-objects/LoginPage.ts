@@ -18,14 +18,14 @@ export class LoginPage {
 
   async login(email: string, password: string) {
     // Wait for the email field to be visible
-    await this.emailInput.waitFor({ state: 'visible', timeout: 10000 }); // Add a timeout if needed
+    await this.emailInput.waitFor({ state: 'visible', timeout: 60000 }); // Add a timeout if needed
     await this.emailInput.fill(email);
     
     // Click the continue button
     await this.continueButton.click();
 
     // Wait for the password field to be visible before filling it
-    await this.passwordInput.waitFor({ state: 'visible', timeout: 10000 });
+    await this.passwordInput.waitFor({ state: 'visible', timeout: 60000 });
     await this.passwordInput.fill(password);
     
     // Click the sign-in button

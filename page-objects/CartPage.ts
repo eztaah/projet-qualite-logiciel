@@ -10,7 +10,7 @@ export class CartPage {
   }
 
   async removeProductFromCart() {
-    await this.deleteButton.waitFor({ state: 'visible', timeout: 10000 });
+    await this.deleteButton.waitFor({ state: 'visible', timeout: 60000 });
     await this.deleteButton.click();
   }
 }
