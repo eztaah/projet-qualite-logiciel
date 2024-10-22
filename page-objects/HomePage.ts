@@ -9,6 +9,8 @@ export class HomePage {
   readonly rejectCookiesButton: Locator;
   readonly cartButton: Locator;
   readonly categoryFilter: Locator;
+  readonly productTitle: Locator;
+  readonly productPrice: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,6 +21,8 @@ export class HomePage {
     this.rejectCookiesButton = page.locator('#sp-cc-rejectall-link');
     this.cartButton = page.locator('#nav-cart');
     this.categoryFilter = page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' });
+    this.productTitle = page.locator('span#productTitle');
+    this.productPrice = page.locator('.a-price .a-offscreen').first();
   }
 
   async rejectCookies() {
@@ -48,6 +52,21 @@ export class HomePage {
     await this.page.waitForLoadState('load');
     await this.addToCartButton.waitFor({ state: 'visible', timeout: 60000 });
     await this.addToCartButton.click();
+  }
+
+  async viewFirstProductDetails() {
+    await this.firstProduct.click();
+    await this.page.waitForLoadState('load');
+  }
+
+  async getProductTitle() {
+    await this.productTitle.waitFor({ state: 'visible', timeout: 60000 });
+    return this.productTitle.textContent();
+  }
+
+  async getProductPrice() {
+    await this.productPrice.waitFor({ state: 'visible', timeout: 60000 });
+    return this.productPrice.textContent();
   }
 
   async goToCart() {
