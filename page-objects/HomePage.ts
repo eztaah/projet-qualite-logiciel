@@ -11,6 +11,10 @@ export class HomePage {
   readonly categoryFilter: Locator;
   readonly productTitle: Locator;
   readonly productPrice: Locator;
+  readonly allMenuButton: Locator;
+  readonly franceOption: Locator;
+  readonly countrySelectorButton: Locator;
+  readonly usOptionInDropdown: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -23,6 +27,10 @@ export class HomePage {
     this.categoryFilter = page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' });
     this.productTitle = page.locator('span#productTitle');
     this.productPrice = page.locator('.a-price .a-offscreen').first();
+    this.allMenuButton = page.locator('#nav-hamburger-menu'); // Bouton "TOUTES" ou "All"
+    this.franceOption = page.locator('a', { hasText: 'France' }); // Option "France" dans le menu
+    this.countrySelectorButton = page.locator('span.a-button-text.a-declarative'); // Bouton de sélection de pays
+    this.usOptionInDropdown = page.locator('a[data-value*="https://www.amazon.com/?ref_=icp_country_from_fr"]'); // Option pour les États-Unis
   }
 
   async rejectCookies() {
@@ -71,5 +79,30 @@ export class HomePage {
 
   async goToCart() {
     await this.cartButton.click();
+  }
+
+  async openAllMenu() {
+    await this.allMenuButton.click();
+  }
+
+  async selectFranceOption() {
+    await this.franceOption.waitFor({ state: 'visible', timeout: 5000 });
+    await this.franceOption.click();
+  }
+
+  async openCountrySelector() {
+    await this.countrySelectorButton.click();
+  }
+
+  async selectCountryUSA() {
+    await this.usOptionInDropdown.waitFor({ state: 'visible', timeout: 5000 });
+    await this.usOptionInDropdown.click();
+    await this.page.waitForLoadState('load');
+  }
+
+  async clickAccessWebsiteButton() {
+    const accessButton = this.page.locator('input.a-button-input[type="submit"]');
+    await accessButton.waitFor({ state: 'visible', timeout: 5000 });
+    await accessButton.click();
   }
 }
