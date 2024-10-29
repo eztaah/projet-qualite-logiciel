@@ -27,10 +27,10 @@ export class HomePage {
     this.categoryFilter = page.locator('span.a-size-base.a-color-base').filter({ hasText: 'Ordinateurs portables' });
     this.productTitle = page.locator('span#productTitle');
     this.productPrice = page.locator('.a-price .a-offscreen').first();
-    this.allMenuButton = page.locator('#nav-hamburger-menu'); // Bouton "TOUTES" ou "All"
-    this.franceOption = page.locator('a', { hasText: 'France' }); // Option "France" dans le menu
-    this.countrySelectorButton = page.locator('span.a-button-text.a-declarative'); // Bouton de sélection de pays
-    this.usOptionInDropdown = page.locator('a[data-value*="https://www.amazon.com/?ref_=icp_country_from_fr"]'); // Option pour les États-Unis
+    this.allMenuButton = page.locator('#nav-hamburger-menu');
+    this.franceOption = page.locator('a.hmenu-item', { hasText: 'France' }); //page.locator('a', { hasText: 'France' });
+    this.countrySelectorButton = page.locator('span.a-button-text.a-declarative');
+    this.usOptionInDropdown = page.locator('a[data-value*="https://www.amazon.com/?ref_=icp_country_from_fr"]');
   }
 
   async rejectCookies() {
@@ -86,7 +86,7 @@ export class HomePage {
   }
 
   async selectFranceOption() {
-    await this.franceOption.waitFor({ state: 'visible', timeout: 5000 });
+    await this.franceOption.waitFor({ state: 'visible', timeout: 30000 });
     await this.franceOption.click();
   }
 
@@ -95,14 +95,40 @@ export class HomePage {
   }
 
   async selectCountryUSA() {
-    await this.usOptionInDropdown.waitFor({ state: 'visible', timeout: 5000 });
+    await this.usOptionInDropdown.waitFor({ state: 'visible', timeout: 30000 });
     await this.usOptionInDropdown.click();
     await this.page.waitForLoadState('load');
   }
 
   async clickAccessWebsiteButton() {
     const accessButton = this.page.locator('input.a-button-input[type="submit"]');
-    await accessButton.waitFor({ state: 'visible', timeout: 5000 });
+    await accessButton.waitFor({ state: 'visible', timeout: 15000 });
     await accessButton.click();
+  }
+
+  async selectFirstProduct() {
+    await this.firstProduct.click();
+  }
+
+  async clickBuyNow() {
+    const buyNowButton = this.page.locator('input#buy-now-button');
+    await buyNowButton.waitFor({ state: 'visible', timeout: 15000 });
+    await buyNowButton.click();
+  }
+
+  async addToCart() {
+    await this.addToCartButton.waitFor({ state: 'visible', timeout: 15000 });
+    await this.addToCartButton.click();
+  }
+
+  async getCartQuantity() {
+    const quantitySelector = this.page.locator('input[name="quantityBox"]');
+    return await quantitySelector.inputValue();
+  }
+
+  async getTotalCartQuantity() {
+    const quantities = await this.page.locator('.sc-list-item-quantity-input').allTextContents();
+    const totalQuantity = quantities.reduce((sum, qty) => sum + parseInt(qty, 10), 0);
+    return totalQuantity;
   }
 }
