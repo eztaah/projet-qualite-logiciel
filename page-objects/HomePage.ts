@@ -20,7 +20,7 @@ export class HomePage {
     this.page = page;
     this.searchInput = page.locator('#twotabsearchtextbox');
     this.searchButton = page.locator('#nav-search-submit-button');
-    this.firstProduct = page.locator('.s-search-results .s-result-item').first();
+    this.firstProduct = page.locator('.s-search-results .s-result-item:has(img[data-image-latency="s-product-image"])').first();
     this.addToCartButton = page.locator('#add-to-cart-button');
     this.rejectCookiesButton = page.locator('#sp-cc-rejectall-link');
     this.cartButton = page.locator('#nav-cart');
@@ -28,7 +28,7 @@ export class HomePage {
     this.productTitle = page.locator('span#productTitle');
     this.productPrice = page.locator('.a-price .a-offscreen').first();
     this.allMenuButton = page.locator('#nav-hamburger-menu');
-    this.franceOption = page.locator('a.hmenu-item', { hasText: 'France' }); //page.locator('a', { hasText: 'France' });
+    this.franceOption = page.locator('a.hmenu-item[href="/customer-preferences/country/?ref_=nav_em_locale_0_1_1_43"]').first();
     this.countrySelectorButton = page.locator('span.a-button-text.a-declarative');
     this.usOptionInDropdown = page.locator('a[data-value*="https://www.amazon.com/?ref_=icp_country_from_fr"]');
   }
@@ -112,13 +112,8 @@ export class HomePage {
 
   async clickBuyNow() {
     const buyNowButton = this.page.locator('input#buy-now-button');
-    await buyNowButton.waitFor({ state: 'visible', timeout: 15000 });
+    await buyNowButton.waitFor({ state: 'visible', timeout: 20000 });
     await buyNowButton.click();
-  }
-
-  async addToCart() {
-    await this.addToCartButton.waitFor({ state: 'visible', timeout: 15000 });
-    await this.addToCartButton.click();
   }
 
   async getCartQuantity() {

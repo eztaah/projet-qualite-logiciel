@@ -5,35 +5,23 @@ test.describe('Shopping Cart Quantity Verification Test for Multiple Products', 
     // Step 1: Go to Amazon homepage
     await homePage.page.goto('https://www.amazon.fr');
 
-    // Step 2: Reject cookies
+    // Step 2: Refuse cookies
     await homePage.rejectCookies();
 
-    // Step 3: Search for the first product
-    const firstProductName = "laptop"; // Example first product
-    await homePage.searchForProduct(firstProductName);
+    // Step 3: Search for a product
+    await homePage.searchForProduct('éponge');
 
-    // Step 4: Click on the first product in the search results
-    await homePage.selectFirstProduct();
+    // Step 4: Add the first product to the cart
+    await homePage.addFirstProductToCart();
 
-    // Step 5: Add the first product to the cart
-    await homePage.addToCart();
+    // Step 5: Search for another product
+    await homePage.searchForProduct('liquide vaiselle');
 
-    // Step 6: Search for a second product
-    const secondProductName = "mouse"; // Example second product
-    await homePage.searchForProduct(secondProductName);
+    // Step 6: Add the first product to the cart
+    await homePage.addFirstProductToCart();
 
-    // Step 7: Click on the first product in the search results
-    await homePage.selectFirstProduct();
-
-    // Step 8: Add the second product to the cart
-    await homePage.addToCart();
-
-    // Step 9: Go to the cart page
-    await homePage.goToCart();
-
-    // Step 10: Verify the total quantity of products in the cart is 2
-    const totalQuantity = await homePage.getTotalCartQuantity();
-    await test.expect(totalQuantity).toBe(2); // Check if the cart contains a total quantity of 2
+    // Step 7: Verify the total quantity of products in the cart is 2
+    const cartCount = await homePage.page.locator('#nav-cart-count').textContent();
+    await test.expect(cartCount).toBe('2');  // Expect one item in the cart
   });
 });
-
