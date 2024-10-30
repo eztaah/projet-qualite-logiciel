@@ -8,8 +8,8 @@ test.describe('Amazon Search Tests', () => {
     // Step 2: Refuse cookies
     await homePage.rejectCookies();
 
-    // Step 3: Search for "éponge"
-    await homePage.searchForProduct('éponge');
+    // Step 3: Search for "liquide vaisselle"
+    await homePage.searchForProduct('liquide vaisselle');
     await homePage.page.waitForTimeout(2000);
 
     // Step 4: Verify that a list of products is displayed

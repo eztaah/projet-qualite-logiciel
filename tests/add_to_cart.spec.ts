@@ -8,8 +8,8 @@ test.describe('Amazon Cart Tests', () => {
     // Step 2: Refuse cookies
     await homePage.rejectCookies();
 
-    // Step 3: Search for "éponge"
-    await homePage.searchForProduct('éponge');
+    // Step 3: Search for "liquide vaisselle"
+    await homePage.searchForProduct('liquide vaisselle');
 
     // Step 4: Add the first product to the cart
     await homePage.addFirstProductToCart();
