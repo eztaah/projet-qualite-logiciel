@@ -5,16 +5,23 @@ test.describe('Amazon Product Details Tests', () => {
     // Step 1: Go to Amazon homepage
     await homePage.page.goto('https://www.amazon.fr');
 
-    // Step 2: Refuse cookies
+    // Step 2: Check if it is Alexa page
+    const isAlexaPage = await homePage.isAlexaPage();
+    if (isAlexaPage) {
+      console.log("La page Alexa est apparue, veuillez relancer le test.");
+      return;
+    }
+
+    // Step 3: Refuse cookies
     await homePage.rejectCookies();
 
-    // Step 3: Search for "liquide vaisselle"
-    await homePage.searchForProduct('liquide vaisselle');
+    // Step 4: Search for a product
+    await homePage.searchForProduct('assiette');
 
-    // Step 4: Click on the first product to view its details
+    // Step 5: Click on the first product to view its details
     await homePage.viewFirstProductDetails();
 
-    // Step 5: Verify that the product title and price are visible
+    // Step 6: Verify that the product title and price are visible
     const productTitle = await homePage.getProductTitle();
     const productPrice = await homePage.getProductPrice();
 

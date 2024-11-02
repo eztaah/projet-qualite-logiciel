@@ -5,14 +5,21 @@ test.describe('Amazon Search Tests', () => {
     // Step 1: Go to Amazon homepage
     await homePage.page.goto('https://www.amazon.fr');
 
-    // Step 2: Refuse cookies
+    // Step 2: Check if it is Alexa page
+    const isAlexaPage = await homePage.isAlexaPage();
+    if (isAlexaPage) {
+      console.log("La page Alexa est apparue, veuillez relancer le test.");
+      return;
+    }
+
+    // Step 3: Refuse cookies
     await homePage.rejectCookies();
 
-    // Step 3: Search for "liquide vaisselle"
-    await homePage.searchForProduct('liquide vaisselle');
+    // Step 4: Search for a product
+    await homePage.searchForProduct('assiette');
     await homePage.page.waitForTimeout(2000);
 
-    // Step 4: Verify that a list of products is displayed
+    // Step 5: Verify that a list of products is displayed
     const productList = homePage.page.locator('.s-search-results .s-result-item');
     const productCount = await productList.count();
     

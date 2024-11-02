@@ -126,4 +126,9 @@ export class HomePage {
     const totalQuantity = quantities.reduce((sum, qty) => sum + parseInt(qty, 10), 0);
     return totalQuantity;
   }
+
+  async isAlexaPage() {
+    const alexaImage = this.page.locator('img[alt="Echo Dot"][src*="61vGSkT3vfL"]');
+    return await alexaImage.isVisible({ timeout: 15000 });
+  }
 }
