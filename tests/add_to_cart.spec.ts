@@ -5,14 +5,14 @@ test.describe('Amazon Cart Tests', () => {
     // Step 1: Go to Amazon homepage
     await homePage.page.goto('https://www.amazon.fr');
 
-    // Step 2: Check if it is Alexa page or Captcha page
+    // Step 2: Check if it is Alexa page or CAPTCHA page
     if (await homePage.isAlexaPage()) {
-      console.error("Erreur : la page Alexa est apparue, veuillez relancer le test.");
-      throw new Error("Page Alexa détectée - Test interrompu");
+      console.error("Error: The Alexa page appeared, please restart the test.");
+      throw new Error("Alexa page detected - Test aborted");
     }
     if (await homePage.isCaptchaPage()) {
-      console.error("Erreur : un CAPTCHA est apparu, veuillez relancer le test.");
-      throw new Error("CAPTCHA détecté - Test interrompu");
+      console.warn("Warning: CAPTCHA detected. Pausing test for manual intervention.");
+      await homePage.handleCaptchaIfPresent(); // This will pause the test and wait for CAPTCHA resolution
     }
 
     // Step 3: Refuse cookies

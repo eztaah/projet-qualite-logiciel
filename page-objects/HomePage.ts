@@ -136,4 +136,16 @@ export class HomePage {
     const captchaImage = this.page.locator('img[src*="captcha"]');
     return await captchaImage.isVisible({ timeout: 15000 });
   }
+
+  async handleCaptchaIfPresent() {
+    const captchaImage = this.page.locator('img[src*="captcha"]');
+    if (await captchaImage.isVisible({ timeout: 15000 })) {
+      console.warn("CAPTCHA detected. Pausing test for manual intervention.");
+      await this.page.pause(); // Pause the test to allow manual CAPTCHA solving
+
+      // Optionally, wait until the CAPTCHA disappears before continuing
+      await captchaImage.waitFor({ state: 'hidden', timeout: 300000 }); // Up to 5 minutes max wait
+      console.log("CAPTCHA solved, resuming test.");
+    }
+  }
 }
