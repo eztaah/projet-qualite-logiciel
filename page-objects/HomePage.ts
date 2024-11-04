@@ -127,8 +127,13 @@ export class HomePage {
     return totalQuantity;
   }
 
-  async isAlexaPage() {
-    const alexaImage = this.page.locator('img[alt="Echo Dot"][src*="61vGSkT3vfL"]');
+  async isAlexaPage(): Promise<boolean> {
+    const alexaImage = this.page.locator('img[src="https://m.media-amazon.com/images/I/61vGSkT3vfL._SX3000_.jpg"]');
     return await alexaImage.isVisible({ timeout: 15000 });
+  }
+
+  async isCaptchaPage(): Promise<boolean> {
+    const captchaImage = this.page.locator('img[src*="captcha"]');
+    return await captchaImage.isVisible({ timeout: 15000 });
   }
 }
